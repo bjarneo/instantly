@@ -27,7 +27,7 @@ var es = new Instantly('http://your-sse-endpoint.codes/channel', {
     retries: 2, // Optional. Default: 5 retries if connection to your endpoint fails.
     timeout: 1000, // Optional. Default: 15 seconds (15000). This is how often we should do a retry.
     closeConnNotFocus: true, // Optional. Default: false. This will close the SSE connection if the tab/window is not in focus. Will reconnect when in focus.
-    error: function() {} // Optional. Extending the internal error handler
+    error: function(err) { console.log(err); } // Optional. Extending the internal error handler
 });
 
 // If you want to use default options

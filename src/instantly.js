@@ -86,13 +86,13 @@ Instantly.prototype = {
         this.initialized = false;
     },
 
-    error: function() {
+    error: function(err) {
         this.close();
 
         this.retry();
 
         if (this.errorHandler) {
-            this.errorHandler.call(this);
+            this.errorHandler.call(this, err);
         }
     },
 
