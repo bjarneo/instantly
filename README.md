@@ -16,7 +16,7 @@ npm install --save instantly
 
 How can I use this library?
 ------
-It's a UMD module. If you don't know what UMD is: [https://github.com/umdjs/umd](https://github.com/umdjs/umd)
+It's an UMD module. If you don't know what UMD is: [https://github.com/umdjs/umd](https://github.com/umdjs/umd)
 
 Usage
 ------
