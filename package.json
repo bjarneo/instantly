@@ -16,6 +16,7 @@
     "build:dev": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint src",
+    "prepublish": "npm prune --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
