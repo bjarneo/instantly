@@ -8,7 +8,7 @@ module.exports = {
     devtool: production ? null : 'eval',
 
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname),
         filename: 'instantly.min.js',
         library: 'Instantly',
         libraryTarget: 'umd',

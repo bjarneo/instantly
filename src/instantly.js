@@ -14,10 +14,19 @@ function Instantly(channel, opts) {
         throw new Error('EventSource is not defined in the window object. Use a polyfill.');
     }
 
-    this.retries = opts.retries || 5;
-    this.timeout = opts.timeout || 15000;
+    if (opts && opts.retries) {
+        this.retries = opts.retries;
+    } else {
+        this.retries = 5;
+    }
 
-    if (opts.error && isFunction(opts.error)) {
+    if (opts && opts.timeout) {
+        this.timeout = opts.timeout;
+    } else {
+        this.timeout = 15000;
+    }
+
+    if (opts && isFunction(opts.error)) {
         this.errorHandler = opts.error;
     }
 
