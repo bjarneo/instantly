@@ -24,12 +24,13 @@ function Instantly(channel, opts) {
     if (isFunction(opts.error)) {
         this.errorHandler = opts.error;
     }
-
-    this.initialized = false;
-    this.callbacks = {};
 }
 
 Instantly.prototype = {
+    initialized: false,
+
+    callbacks: {},
+
     internalRetry: 0,
 
     on: function(event, callback) {
