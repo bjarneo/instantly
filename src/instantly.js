@@ -14,10 +14,6 @@ function Instantly(channel, opts) {
         opts = {};
     }
 
-    if (!window.EventSource) {
-        throw new Error('EventSource is not defined in the window object. Use a polyfill.');
-    }
-
     this.retries = opts.retries || 5;
     this.timeout = opts.timeout || 15000;
 
@@ -45,6 +41,10 @@ Instantly.prototype = {
     },
 
     listen: function() {
+        if (!window.EventSource) {
+            return;
+        }
+
         this.es = new EventSource(this.channel);
 
         this.es.addEventListener('open', this.open.bind(this));
