@@ -1,5 +1,6 @@
 instantly
 ======
+[![Code Climate](https://codeclimate.com/github/bjarneo/instantly/badges/gpa.svg)](https://codeclimate.com/github/bjarneo/instantly)
 
 What is this?
 ------
