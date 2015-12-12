@@ -3,7 +3,7 @@ instantly
 
 What is this?
 ------
-(EventSource)[https://developer.mozilla.org/en-US/docs/Web/API/EventSource] abstraction layer. <br>
+[EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) abstraction layer. <br>
 The EventSource API is easy as is. Reason I created this was to hide all logic I use when I implement EventSource.
 
 Installation
