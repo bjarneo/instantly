@@ -17,6 +17,10 @@ function Instantly(channel, opts) {
     this.retries = opts.retries || 5;
     this.timeout = opts.timeout || 15000;
 
+    if (opts.closeConnNotFocus) {
+        document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
+    }
+
     if (isFunction(opts.error)) {
         this.errorHandler = opts.error;
     }
@@ -89,6 +93,14 @@ Instantly.prototype = {
 
         if (this.errorHandler) {
             this.errorHandler.call(this);
+        }
+    },
+
+    onVisibilityChange: function() {
+        if (document.hidden) {
+            this.close();
+        } else {
+            this.listen();
         }
     }
 };
