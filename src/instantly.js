@@ -69,7 +69,7 @@ Instantly.prototype = {
             return;
         }
 
-        setTimeout(function() {
+        setTimeout(function reconnect() {
             this.listen();
 
             this.internalRetry++;
