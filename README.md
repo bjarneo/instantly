@@ -9,7 +9,7 @@ IMPORTANT. This is NOT EventSource Polyfill!
 
 Installation
 ------
-It's avaiable on npm.
+It's available on npm.
 ```
 npm install --save instantly
 ```
