@@ -1,6 +1,6 @@
 {
   "name": "instantly",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "EventSource abstraction layer",
   "keywords": [
     "eventsource",
@@ -20,6 +20,14 @@
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bjarneo/instantly.git"
+  },
+  "homepage": "https://github.com/bjarneo/instantly",
+  "bugs": {
+    "url": "https://github.com/bjarneo/instantly/issues"
+  },
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-config-vgno": "^5.0.0",
