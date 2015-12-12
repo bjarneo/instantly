@@ -47,6 +47,10 @@ es.on('eventName', function newMessage(msg) {
 es.listen();
 ```
 
+High performance SSE server
+------
+[SSEHub (Server-Sent Events streaming server)](https://github.com/vgno/ssehub)
+
 Contribution
 ------
 Contributions are appreciated.
