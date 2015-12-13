@@ -1,6 +1,6 @@
 {
   "name": "instantly",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "EventSource abstraction layer",
   "keywords": [
     "eventsource",
@@ -16,7 +16,7 @@
     "build:dev": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint src/",
-    "prepublish": "NODE_ENV=production npm prune",
+    "prepublish": "npm run lint && NODE_ENV=production npm prune",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
