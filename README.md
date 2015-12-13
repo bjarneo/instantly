@@ -47,6 +47,15 @@ es.on('eventName', function newMessage(msg) {
 es.listen();
 ```
 
+Example
+------
+Navigate to example folder
+```
+npm install
+npm start
+```
+Open your browser in http://localhost:1337
+
 High performance SSE server
 ------
 [SSEHub (Server-Sent Events streaming server)](https://github.com/vgno/ssehub)

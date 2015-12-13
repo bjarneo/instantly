@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>EventSource Example</title>
+    </head>
+    <body>
+        <h1>Instantly</h1>
+
+        <ul id="updated"></ul>
+
+        <script><%- instantly %></script>
+        <script>
+            var ul = document.getElementById('updated');
+            var li;
+
+            var es = new Instantly('http://localhost:1337/sse');
+
+            es.on('custom-event-name', function newMessage(msg) {
+                data = JSON.parse(msg.data);
+
+                li = document.createElement('li');
+                li.innerHTML = data.time;
+
+                ul.insertBefore(li, ul.firstChild);
+            });
+
+            es.listen();
+        </script>
+    </body>
+</html>
