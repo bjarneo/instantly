@@ -17,6 +17,8 @@ function Instantly(channel, opts) {
     this.retries = opts.retries || 5;
     this.timeout = opts.timeout || 15000;
     this.errorHandler = isFunction(opts.error) ? opts.error : null;
+    this.onOpen = isFunction(opts.open) ? opts.open : null;
+    this.onClose = isFunction(opts.close) ? opts.close : null;
 
     if (opts.closeConnNotFocus) {
         document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
@@ -73,15 +75,24 @@ Instantly.prototype = {
         }.bind(this), this.timeout);
     },
 
-    open: function() {
+    open: function(e) {
         this.initialized = true;
+
         this.internalRetry = 0;
+
+        if (this.onOpen) {
+            this.onOpen.call(this, e);
+        }
     },
 
     close: function() {
         this.es.close();
 
         this.initialized = false;
+
+        if (this.onClose) {
+            this.onClose.call(this);
+        }
     },
 
     error: function(err) {

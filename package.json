@@ -1,6 +1,6 @@
 {
   "name": "instantly",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "EventSource abstraction layer",
   "keywords": [
     "eventsource",
