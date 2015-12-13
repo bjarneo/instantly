@@ -16,13 +16,10 @@ function Instantly(channel, opts) {
 
     this.retries = opts.retries || 5;
     this.timeout = opts.timeout || 15000;
+    this.errorHandler = isFunction(opts.error) ? opts.error : null;
 
     if (opts.closeConnNotFocus) {
         document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
-    }
-
-    if (isFunction(opts.error)) {
-        this.errorHandler = opts.error;
     }
 }
 
