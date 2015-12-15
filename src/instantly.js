@@ -60,11 +60,11 @@ Instantly.prototype = {
                 return;
             }
 
-            this.createCallbacks(event);
+            this.generateCallback(event);
         }
     },
 
-    createCallbacks: function(event) {
+    generateCallback: function(event) {
         this.es.addEventListener(event, function(e) {
             if (this.origin && e.origin !== this.origin) {
                 return;
