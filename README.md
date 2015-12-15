@@ -50,6 +50,10 @@ es.on('eventName', function newMessage(msg) {
 es.listen();
 ```
 
+Built in features
+------
+* If you send an event with event id 'CLOSE', it'll close your sse connection with no retries.
+
 Example
 ------
 Navigate to example folder

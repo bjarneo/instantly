@@ -65,6 +65,10 @@ Instantly.prototype = {
                     return;
                 }
 
+                if (e.id === 'CLOSE') {
+                    this.close();
+                }
+
                 this.callbacks[event].call(this, e);
             }.bind(this));
         }
