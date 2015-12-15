@@ -60,18 +60,22 @@ Instantly.prototype = {
                 return;
             }
 
-            this.es.addEventListener(event, function(e) {
-                if (this.origin && e.origin !== this.origin) {
-                    return;
-                }
-
-                if (e.id === 'CLOSE') {
-                    this.close();
-                }
-
-                this.callbacks[event].call(this, e);
-            }.bind(this));
+            this.createCallbacks(event);
         }
+    },
+
+    createCallbacks: function(event) {
+        this.es.addEventListener(event, function(e) {
+            if (this.origin && e.origin !== this.origin) {
+                return;
+            }
+
+            if (e.id === 'CLOSE') {
+                this.close();
+            }
+
+            this.callbacks[event].call(this, e);
+        }.bind(this));
     },
 
     retry: function() {
