@@ -24,6 +24,7 @@ Usage
 ```javascript
 // Example
 var es = new Instantly('http://your-sse-endpoint.codes/channel', {
+    origin: 'http://your-sse-endpoint.codes', // Optional. Just an extra level of precaution to verify your event origin matches your app's origin.
     retries: 2, // Optional. Default: 5 retries if connection to your endpoint fails.
     timeout: 1000, // Optional. Default: 15 seconds (15000). This is how often we should retry.
     closeConnNotFocus: true, // Optional. Default: false. This will close the SSE connection if the tab/window is not in focus. Will reconnect when in focus.

@@ -14,6 +14,7 @@ function Instantly(channel, opts) {
         opts = {};
     }
 
+    this.origin = opts.origin || null;
     this.retries = opts.retries || 5;
     this.timeout = opts.timeout || 15000;
     this.errorHandler = isFunction(opts.error) ? opts.error : null;
@@ -59,7 +60,13 @@ Instantly.prototype = {
                 return;
             }
 
-            this.es.addEventListener(event, this.callbacks[event]);
+            this.es.addEventListener(event, function(e) {
+                if (this.origin && e.origin !== this.origin) {
+                    return;
+                }
+
+                this.callbacks[event].call(this, e);
+            }.bind(this));
         }
     },
 
