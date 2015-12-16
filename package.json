@@ -16,7 +16,7 @@
     "build:dev": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint src/",
-    "prepublish": "npm run lint && NODE_ENV=production npm prune",
+    "prepublish": "NODE_ENV=production npm prune",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
@@ -34,8 +34,5 @@
     "eslint-config-vgno": "^5.0.0",
     "webpack": "^1.12.9"
   },
-  "dependencies": {
-    "lodash.isfunction": "^3.0.6",
-    "lodash.isstring": "^3.0.1"
-  }
+  "dependencies": {}
 }

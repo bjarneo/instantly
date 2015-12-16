@@ -1,7 +1,7 @@
 'use strict';
 
-var isString = require('lodash.isstring');
-var isFunction = require('lodash.isfunction');
+var isString = require('./is-string');
+var isFunction = require('./is-function');
 
 function Instantly(channel, opts) {
     if (!channel) {
