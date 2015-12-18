@@ -74,7 +74,7 @@ Instantly.prototype = {
                 this.close();
             }
 
-            this.callbacks[event].call(this, e);
+            this.callbacks[event].call(null, e);
         }.bind(this));
     },
 
@@ -96,7 +96,7 @@ Instantly.prototype = {
         this.internalRetry = 0;
 
         if (this.onOpen) {
-            this.onOpen.call(this, e);
+            this.onOpen.call(null, e);
         }
     },
 
@@ -106,7 +106,7 @@ Instantly.prototype = {
         this.initialized = false;
 
         if (this.onClose) {
-            this.onClose.call(this);
+            this.onClose.call(null);
         }
     },
 
@@ -116,7 +116,7 @@ Instantly.prototype = {
         this.retry();
 
         if (this.errorHandler) {
-            this.errorHandler.call(this, err);
+            this.errorHandler.call(null, err);
         }
     },
 
