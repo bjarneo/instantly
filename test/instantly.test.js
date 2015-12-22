@@ -15,18 +15,24 @@ describe('instantly', function() {
 
     var es, server;
 
-    function startServer() {
+    function startServer(event) {
         var channel = new SseChannel();
-        setInterval(function broadcast() {
-            channel.send('testing instantly');
-        }, 1500);
+        // Prevent done from running twice
+        var timeout = Math.floor(Math.random() * 2000) + 1000;
+        var params = {
+            id: timeout,
+            data: 'testing instantly'
+        };
+
+        if (event === 'CLOSE') {
+            params.id = event;
+        } else {
+            params.event = event ? event : 'message';
+        }
 
         setInterval(function broadcast() {
-            channel.send({
-                event: 'custom-event',
-                data: 'testing instantly'
-            });
-        }, 1000);
+            channel.send(params);
+        }, timeout);
 
         server = http.createServer(function(req, res) {
             if (req.url.indexOf('/channel/test') === 0) {
@@ -63,7 +69,7 @@ describe('instantly', function() {
     });
 
     it('should connect to the channel and recieve data from custom event', function(done) {
-        startServer();
+        startServer('custom-event');
 
         es = new Instantly(endpoint, {
             injectEventSourceNode: EventSource
@@ -141,5 +147,28 @@ describe('instantly', function() {
         }, /You need to provide a channel we can listen to!/);
 
         done();
+    });
+
+    it('should close the connection if an id "CLOSE" is sent by server', function(done) {
+        startServer('CLOSE');
+
+        var isClosed = true;
+
+        es = new Instantly(endpoint, {
+            injectEventSourceNode: EventSource,
+            close: function() {
+                assert.equal('closing', 'closing');
+
+                if (isClosed) {
+                    isClosed = false;
+
+                    done();
+                }
+            }
+        });
+
+        es.on('message', function() {});
+
+        es.listen();
     });
 });
