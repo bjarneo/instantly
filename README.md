@@ -1,6 +1,7 @@
 instantly
 ======
 [![Code Climate](https://codeclimate.com/github/bjarneo/instantly/badges/gpa.svg)](https://codeclimate.com/github/bjarneo/instantly)
+![Travis](https://travis-ci.org/bjarneo/instantly.svg?branch=master)
 
 What is this?
 ------
