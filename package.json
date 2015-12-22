@@ -1,6 +1,6 @@
 {
   "name": "instantly",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "EventSource abstraction layer",
   "keywords": [
     "eventsource",
@@ -33,6 +33,9 @@
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-config-vgno": "^5.0.0",
+    "eventsource": "^0.1.6",
+    "mocha": "^2.3.4",
+    "sse-channel": "^2.0.0",
     "webpack": "^1.12.9"
   },
   "dependencies": {
