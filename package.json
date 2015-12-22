@@ -19,7 +19,7 @@
     "lint": "eslint src/ test/",
     "posttest": "npm run lint",
     "prepublish": "npm test",
-    "test": "mocha test/"
+    "test": "istanbul cover _mocha"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
@@ -35,6 +35,7 @@
     "eslint": "^1.10.3",
     "eslint-config-vgno": "^5.0.0",
     "eventsource": "^0.1.6",
+    "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
     "sse-channel": "^2.0.0",
     "webpack": "^1.12.9"
