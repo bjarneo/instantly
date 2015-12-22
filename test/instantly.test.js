@@ -45,9 +45,13 @@ describe('instantly', function() {
     }
 
     afterEach(function(done) {
-        server.close();
+        if (server) {
+            server.close();
+        }
 
-        es.close();
+        if (es) {
+            es.close();
+        }
 
         done();
     });
@@ -140,13 +144,55 @@ describe('instantly', function() {
     });
 
     it('should throw TypeError exception if channel is not set', function(done) {
-        startServer();
-
         assert.throws(function() {
             es = new Instantly();
         }, /You need to provide a channel we can listen to!/);
 
         done();
+    });
+
+    it('should throw TypeError exception if event is not a string', function() {
+        startServer();
+
+        var instantly = new Instantly(endpoint, {
+            injectEventSourceNode: EventSource
+        });
+
+        assert.throws(function() {
+            instantly.on(null, function() {});
+        }, /Event is not a string/);
+
+        assert.throws(function() {
+            instantly.on({}, function() {});
+        }, /Event is not a string/);
+
+        assert.throws(function() {
+            instantly.on(undefined, function() {});
+        }, /Event is not a string/);
+
+        assert.throws(function() {
+            instantly.on(12312, function() {});
+        }, /Event is not a string/);
+    });
+
+    it('should throw TypeError exception if callback is not a function', function() {
+        startServer();
+
+        var instantly = new Instantly(endpoint, {
+            injectEventSourceNode: EventSource
+        });
+
+        assert.throws(function() {
+            instantly.on('event');
+        }, /Callback is not a function/);
+
+        assert.throws(function() {
+            instantly.on('event', 'string');
+        }, /Callback is not a function/);
+
+        assert.throws(function() {
+            instantly.on('event', {});
+        }, /Callback is not a function/);
     });
 
     it('should close the connection if an id "CLOSE" is sent by server', function(done) {
