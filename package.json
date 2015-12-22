@@ -8,7 +8,8 @@
     "real-time",
     "realtime",
     "event-stream",
-    "server-sent events"
+    "server-sent events",
+    "events"
   ],
   "main": "instantly.min.js",
   "scripts": {
