@@ -15,9 +15,10 @@
     "build": "NODE_ENV=production webpack -p",
     "build:dev": "webpack",
     "watch": "webpack --watch",
-    "lint": "eslint src/",
-    "prepublish": "NODE_ENV=production npm prune",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint src/ test/",
+    "posttest": "npm run lint",
+    "prepublish": "npm test && NODE_ENV=production npm prune",
+    "test": "mocha test/"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
