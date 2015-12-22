@@ -76,7 +76,7 @@ Instantly.prototype = {
                 return;
             }
 
-            if (e.id === 'CLOSE') {
+            if (e.id === 'CLOSE' || e.lastEventId === 'CLOSE') {
                 this.close();
             }
 
