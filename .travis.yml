@@ -5,3 +5,6 @@ node_js:
   - '0.12'
 after_script:
   - npm install codeclimate-test-reporter && cat coverage/lcov.info | codeclimate-test-reporter
+addons:
+    code_climate:
+        repo_token: bfa2755a2e065ab248bd07f755c93463d551727293094c5f6b52e8e3f63fe288
