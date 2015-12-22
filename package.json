@@ -18,7 +18,7 @@
     "watch": "webpack --watch",
     "lint": "eslint src/ test/",
     "posttest": "npm run lint",
-    "prepublish": "npm test && NODE_ENV=production npm prune",
+    "prepublish": "npm test",
     "test": "mocha test/"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
