@@ -30,7 +30,8 @@ var es = new Instantly('http://your-sse-endpoint.codes/channel', {
     closeConnNotFocus: true, // Optional. Default: false. This will close the SSE connection if the tab/window is not in focus. Will reconnect when in focus.
     error: function(err) { console.log(err); }, // Optional. Extending the internal error handler.
     open: function(event) { console.log(event); }, // Optional. Extend when you open a connection to SSE.
-    close: function() { console.log(); } // Optional. Extend when a connection to SSE is closed. (Usually when an error occur)
+    close: function() { console.log('closed'); }, // Optional. Extend when a connection to SSE is closed. (Usually when an error occur)
+    injectEventSourceNode: require('eventsource') // Optional. If the module is being used in Node you're able to inject eventsource-node.
 });
 
 // If you want to use default options

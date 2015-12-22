@@ -1,7 +1,7 @@
 'use strict';
 
-var isString = require('./is-string');
-var isFunction = require('./is-function');
+var isString = require('lodash.isstring');
+var isFunction = require('lodash.isfunction');
 
 function Instantly(channel, opts) {
     if (!channel) {
@@ -12,6 +12,12 @@ function Instantly(channel, opts) {
 
     if (!opts) {
         opts = {};
+    }
+
+    if (opts.injectEventSourceNode) {
+        this.EventSource = opts.injectEventSourceNode;
+    } else if (window && window.EventSource) {
+        this.EventSource = window.EventSource;
     }
 
     this.origin = opts.origin || null;
@@ -46,11 +52,11 @@ Instantly.prototype = {
     },
 
     listen: function() {
-        if (!window.EventSource) {
+        if (!this.EventSource) {
             return;
         }
 
-        this.es = new EventSource(this.channel);
+        this.es = new this.EventSource(this.channel);
 
         this.es.addEventListener('open', this.open.bind(this));
         this.es.addEventListener('error', this.error.bind(this));
