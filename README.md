@@ -22,7 +22,7 @@ It's an UMD module. If you don't know what UMD is: [https://github.com/umdjs/umd
 
 Usage
 ------
-```javascript
+```js
 // Example
 var es = new Instantly('http://your-sse-endpoint.codes/channel', {
     origin: 'http://your-sse-endpoint.codes', // Optional. Just an extra level of precaution to verify your event origin matches your app's origin.
@@ -32,7 +32,7 @@ var es = new Instantly('http://your-sse-endpoint.codes/channel', {
     error: function(err) { console.log(err); }, // Optional. Extending the internal error handler.
     open: function(event) { console.log(event); }, // Optional. Extend when you open a connection to SSE.
     close: function() { console.log('closed'); }, // Optional. Extend when a connection to SSE is closed. (Usually when an error occur)
-    injectEventSourceNode: require('eventsource') // Optional. If the module is being used in Node you're able to inject eventsource-node.
+    injectEventSourceNode: require('eventsource') // Optional. If the module is being used in Node you're able to inject [eventsource-node](https://www.npmjs.com/package/eventsource)
 });
 
 // If you want to use default options
@@ -49,6 +49,15 @@ es.on('eventName', function newMessage(msg) {
 });
 
 // Start to listen for events send by SSE
+es.listen();
+```
+
+If you need to close the connection client side
+```js
+// Close
+es.close();
+
+// Need to start the connection again?
 es.listen();
 ```
 
