@@ -217,4 +217,22 @@ describe('instantly', function() {
 
         es.listen();
     });
+
+    it('should generate event callback', function(done) {
+        startServer('test');
+
+        es = new Instantly(endpoint, {
+            injectEventSourceNode: EventSource
+        });
+
+        es.listen();
+
+        es.on('test', function() {
+            assert.equal('generate callback', 'generate callback');
+
+            done();
+        });
+
+        es.generateCallback('test');
+    });
 });
