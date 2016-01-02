@@ -49,7 +49,7 @@ describe('instantly', function() {
             server.close();
         }
 
-        if (es) {
+        if (es && es.es) {
             es.close();
         }
 
@@ -234,5 +234,26 @@ describe('instantly', function() {
         });
 
         es.generateCallback('test');
+    });
+
+    it('should return undefined if eventsource doesn\'t exist', function(done) {
+        startServer();
+
+        es = new Instantly(endpoint);
+        assert.equal(es.listen(), undefined);
+
+        done();
+    });
+
+    it('should return undefined if there is no event defined', function(done) {
+        startServer();
+
+        es = new Instantly(endpoint, {
+            injectEventSourceNode: EventSource
+        });
+
+        assert.equal(es.listen(), undefined);
+
+        done();
     });
 });

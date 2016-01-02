@@ -16,7 +16,7 @@ function Instantly(channel, opts) {
 
     if (opts.injectEventSourceNode) {
         this.EventSource = opts.injectEventSourceNode;
-    } else if (window && window.EventSource) {
+    } else if (typeof window !== 'undefined' && window.EventSource) {
         this.EventSource = window.EventSource;
     }
 
