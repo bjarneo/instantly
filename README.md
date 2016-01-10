@@ -1,6 +1,6 @@
 
 
-<p align="center">![Instantly](http://i.imgur.com/pXixrM8.png)</p>
+<p align="center"><img src="http://i.imgur.com/pXixrM8.png" /></p>
 
 
 
