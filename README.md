@@ -13,7 +13,9 @@ instantly
 What is this?
 ------
 [EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) abstraction layer. <br>
-The EventSource API is easy as it is. Reason I created this was to hide all logic I use when I implement EventSource. <br>
+
+The EventSource API is easy as it is. Reason I created this was to hide all logic used when I implement EventSource. <br>
+
 IMPORTANT. This is NOT EventSource Polyfill!
 
 Installation
