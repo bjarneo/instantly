@@ -1,6 +1,6 @@
 
 
-->![Instantly](http://i.imgur.com/pXixrM8.png)<-
+<p align="center">![Instantly](http://i.imgur.com/pXixrM8.png)</p>
 
 
 
