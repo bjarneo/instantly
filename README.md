@@ -9,6 +9,7 @@ instantly
 [![Code Climate](https://codeclimate.com/github/bjarneo/instantly/badges/gpa.svg)](https://codeclimate.com/github/bjarneo/instantly)
 [![Test Coverage](https://codeclimate.com/github/bjarneo/instantly/badges/coverage.svg)](https://codeclimate.com/github/bjarneo/instantly/coverage)
 ![Travis](https://travis-ci.org/bjarneo/instantly.svg?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/npm/instantly/badge.svg)](https://snyk.io/test/npm/instantly)
 
 What is this?
 ------

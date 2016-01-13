@@ -1,6 +1,6 @@
 {
   "name": "instantly",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "EventSource abstraction layer",
   "keywords": [
     "eventsource",
@@ -17,9 +17,10 @@
     "build:dev": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint src/ test/",
+    "snyk": "snyk test",
     "posttest": "npm run lint",
     "prepublish": "npm test",
-    "test": "istanbul cover _mocha"
+    "test": "snyk test && istanbul cover _mocha"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
@@ -37,6 +38,7 @@
     "eventsource": "^0.1.6",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
+    "snyk": "^1.8.4",
     "sse-channel": "^2.0.0",
     "webpack": "^1.12.9"
   },
