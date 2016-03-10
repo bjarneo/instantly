@@ -4,7 +4,7 @@ var assert = require('assert');
 var http = require('http');
 var EventSource = require('eventsource');
 var SseChannel = require('sse-channel');
-var Instantly = require('../src/instantly');
+var instantly = require('../src/instantly');
 
 var endpoint = 'http://127.0.0.1:7788/channel/test';
 var port = 7788;
@@ -18,7 +18,7 @@ describe('instantly', function() {
     function startServer(event) {
         var channel = new SseChannel();
         // Prevent done from running twice
-        var timeout = Math.floor(Math.random() * 2000) + 1000;
+        var timeout = 1000;
         var params = {
             id: timeout,
             data: 'testing instantly'
@@ -30,7 +30,7 @@ describe('instantly', function() {
             params.event = event ? event : 'message';
         }
 
-        setInterval(function broadcast() {
+        setTimeout(function broadcast() {
             channel.send(params);
         }, timeout);
 
@@ -59,7 +59,7 @@ describe('instantly', function() {
     it('should connect to the channel and recieve data', function(done) {
         startServer();
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
@@ -75,7 +75,7 @@ describe('instantly', function() {
     it('should connect to the channel and recieve data from custom event', function(done) {
         startServer('custom-event');
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
@@ -91,7 +91,7 @@ describe('instantly', function() {
     it('should run open callback when a connection is open', function(done) {
         startServer();
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource,
             open: function() {
                 assert.equal('should run', 'should run');
@@ -106,7 +106,7 @@ describe('instantly', function() {
     it('should run error callback when an error occur', function(done) {
         startServer();
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource,
             error: function() {
                 assert.equal('should run', 'should run');
@@ -125,7 +125,7 @@ describe('instantly', function() {
 
         var isClosed = true;
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource,
             close: function() {
                 assert.equal('should run', 'should run');
@@ -145,7 +145,7 @@ describe('instantly', function() {
 
     it('should throw TypeError exception if channel is not set', function(done) {
         assert.throws(function() {
-            es = new Instantly();
+            es = instantly();
         }, /You need to provide a channel we can listen to!/);
 
         done();
@@ -154,44 +154,44 @@ describe('instantly', function() {
     it('should throw TypeError exception if event is not a string', function() {
         startServer();
 
-        var instantly = new Instantly(endpoint, {
+        var instant = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
         assert.throws(function() {
-            instantly.on(null, function() {});
+            instant.on(null, function() {});
         }, /Event is not a string/);
 
         assert.throws(function() {
-            instantly.on({}, function() {});
+            instant.on({}, function() {});
         }, /Event is not a string/);
 
         assert.throws(function() {
-            instantly.on(undefined, function() {});
+            instant.on(undefined, function() {});
         }, /Event is not a string/);
 
         assert.throws(function() {
-            instantly.on(12312, function() {});
+            instant.on(12312, function() {});
         }, /Event is not a string/);
     });
 
     it('should throw TypeError exception if callback is not a function', function() {
         startServer();
 
-        var instantly = new Instantly(endpoint, {
+        var instant = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
         assert.throws(function() {
-            instantly.on('event');
+            instant.on('event');
         }, /Callback is not a function/);
 
         assert.throws(function() {
-            instantly.on('event', 'string');
+            instant.on('event', 'string');
         }, /Callback is not a function/);
 
         assert.throws(function() {
-            instantly.on('event', {});
+            instant.on('event', {});
         }, /Callback is not a function/);
     });
 
@@ -200,7 +200,7 @@ describe('instantly', function() {
 
         var isClosed = true;
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource,
             close: function() {
                 assert.equal('closing', 'closing');
@@ -221,7 +221,7 @@ describe('instantly', function() {
     it('should generate event callback', function(done) {
         startServer('test');
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
@@ -239,7 +239,7 @@ describe('instantly', function() {
     it('should return undefined if eventsource doesn\'t exist', function(done) {
         startServer();
 
-        es = new Instantly(endpoint);
+        es = instantly(endpoint);
         assert.equal(es.listen(), undefined);
 
         done();
@@ -248,7 +248,7 @@ describe('instantly', function() {
     it('should return undefined if there is no event defined', function(done) {
         startServer();
 
-        es = new Instantly(endpoint, {
+        es = instantly(endpoint, {
             injectEventSourceNode: EventSource
         });
 
