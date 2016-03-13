@@ -3,39 +3,41 @@
 var isString = require('lodash.isstring');
 var isFunction = require('lodash.isfunction');
 
-function instantly(channel, opts) {
+function Instantly(channel, opts) {
     if (!channel) {
         throw new TypeError('You need to provide a channel we can listen to!');
     }
+
+    this.channel = channel;
 
     if (!opts) {
         opts = {};
     }
 
-    var EventSource;
     if (opts.injectEventSourceNode) {
-        EventSource = opts.injectEventSourceNode;
+        this.EventSource = opts.injectEventSourceNode;
     } else if (typeof window !== 'undefined' && window.EventSource) {
-        EventSource = window.EventSource;
+        this.EventSource = window.EventSource;
     }
 
-    var origin = opts.origin || null;
-    var retries = opts.retries || 5;
-    var timeout = opts.timeout || 15000;
-    var errorHandler = isFunction(opts.error) ? opts.error : null;
-    var onOpen = isFunction(opts.open) ? opts.open : null;
-    var onClose = isFunction(opts.close) ? opts.close : null;
+    this.origin = opts.origin || null;
+    this.retries = opts.retries || 5;
+    this.timeout = opts.timeout || 15000;
+    this.errorHandler = isFunction(opts.error) ? opts.error : null;
+    this.onOpen = isFunction(opts.open) ? opts.open : null;
+    this.onClose = isFunction(opts.close) ? opts.close : null;
 
     if (opts.closeConnNotFocus && typeof document !== 'undefined') {
-        document.addEventListener('visibilitychange', onVisibilityChange);
+        document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
     }
+}
 
-    var initialized = false;
-    var callbacks = {};
-    var internalRetry = 0;
-    var es;
+Instantly.prototype = {
+    initialized: false,
+    callbacks: {},
+    internalRetry: 0,
 
-    function on(event, callback) {
+    on: function(event, callback) {
         if (!isFunction(callback)) {
             throw new TypeError('Callback is not a function');
         }
@@ -44,103 +46,91 @@ function instantly(channel, opts) {
             throw new TypeError('Event is not a string');
         }
 
-        callbacks[event] = callback;
-    }
+        this.callbacks[event] = callback;
+    },
 
-    function listen() {
-        if (!EventSource) {
+    listen: function() {
+        if (!this.EventSource) {
             return;
         }
 
-        es = new EventSource(channel);
+        this.es = new this.EventSource(this.channel);
 
-        es.addEventListener('open', open);
-        es.addEventListener('error', error);
+        this.es.addEventListener('open', this.open.bind(this));
+        this.es.addEventListener('error', this.error.bind(this));
 
-        for (var event in callbacks) {
-            if (!callbacks.hasOwnProperty(event)) {
+        for (var event in this.callbacks) {
+            if (!this.callbacks.hasOwnProperty(event)) {
                 return;
             }
 
-            generateCallback(event);
+            this.generateCallback(event);
         }
-    }
+    },
 
-    function generateCallback(event) {
-        es.addEventListener(event, function(e) {
-            if (origin && e.origin !== origin) {
+    generateCallback: function(event) {
+        this.es.addEventListener(event, function(e) {
+            if (this.origin && e.origin !== this.origin) {
                 return;
             }
 
             if (e.id === 'CLOSE' || e.lastEventId === 'CLOSE') {
-                close();
+                this.close();
             }
 
-            callbacks[event].call(null, e);
-        });
-    }
+            this.callbacks[event].call(null, e);
+        }.bind(this));
+    },
 
-    function retry() {
-        if (initialized || internalRetry === retries) {
+    retry: function() {
+        if (this.initialized || this.internalRetry === this.retries) {
             return;
         }
 
         setTimeout(function reconnect() {
-            listen();
+            this.listen();
 
-            internalRetry++;
-        }, timeout);
-    }
+            this.internalRetry++;
+        }.bind(this), this.timeout);
+    },
 
-    function open(e) {
-        initialized = true;
+    open: function(e) {
+        this.initialized = true;
 
-        internalRetry = 0;
+        this.internalRetry = 0;
 
-        if (onOpen) {
-            onOpen.call(null, e);
+        if (this.onOpen) {
+            this.onOpen.call(null, e);
         }
-    }
+    },
 
-    function close() {
-        es.close();
+    close: function() {
+        this.es.close();
 
-        initialized = false;
+        this.initialized = false;
 
-        if (onClose) {
-            onClose.call(null);
+        if (this.onClose) {
+            this.onClose.call(null);
         }
-    }
+    },
 
-    function error(err) {
-        close();
+    error: function(err) {
+        this.close();
 
-        retry();
+        this.retry();
 
-        if (errorHandler) {
-            errorHandler.call(null, err);
+        if (this.errorHandler) {
+            this.errorHandler.call(null, err);
         }
-    }
+    },
 
-    function onVisibilityChange() {
+    onVisibilityChange: function() {
         if (document.hidden) {
-            close();
+            this.close();
         } else {
-            listen();
+            this.listen();
         }
     }
+};
 
-    return {
-        on: on,
-        listen: listen,
-        // Should not be exposed. Rewrite for tests.
-        generateCallback: generateCallback,
-        retry: retry,
-        // Should not be exposed. Rewrite for tests.
-        close: close,
-        // Should not be exposed. Rewrite for tests.
-        error: error
-    };
-}
-
-module.exports = instantly;
+module.exports = Instantly;
