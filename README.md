@@ -34,7 +34,7 @@ Usage
 ------
 ```js
 // Example
-var es = instantly('http://your-sse-endpoint.codes/channel', {
+var es = new Instantly('http://your-sse-endpoint.codes/channel', {
     origin: 'http://your-sse-endpoint.codes', // Optional. Just an extra level of precaution to verify your event origin matches your app's origin.
     retries: 2, // Optional. Default: 5 retries if connection to your endpoint fails.
     timeout: 1000, // Optional. Default: 15 seconds (15000). This is how often we should retry.
@@ -46,7 +46,7 @@ var es = instantly('http://your-sse-endpoint.codes/channel', {
 });
 
 // If you want to use default options
-// var es = instantly('http://your-sse-endpoint.codes/channel');
+// var es = new Instantly('http://your-sse-endpoint.codes/channel');
 
 // Listen to messages without any event set
 es.on('message', function newMessage(msg) {
