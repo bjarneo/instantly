@@ -10,7 +10,7 @@ module.exports = {
     output: {
         path: path.join(__dirname),
         filename: 'instantly.min.js',
-        library: 'instantly',
+        library: 'Instantly',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
