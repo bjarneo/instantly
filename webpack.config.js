@@ -30,13 +30,5 @@ module.exports = {
         })
     ] : [
         new webpack.NoErrorsPlugin()
-    ],
-
-    node: {
-        fs: 'empty',
-        tls: 'empty',
-        net: 'empty',
-        dns: 'empty',
-        console: production
-    }
+    ]
 };
