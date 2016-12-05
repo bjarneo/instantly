@@ -1,6 +1,6 @@
 
 
-<p align="center"><img src="http://i.imgur.com/pXixrM8.png" /></p>
+![Instantly](http://i.imgur.com/pXixrM8.png)
 
 
 
@@ -13,7 +13,7 @@ instantly
 
 What is this?
 ------
-[EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) abstraction layer. <br>
+[EventSource](https://developer.mozilla.org/en-US/docs/Web/API/EventSource) wrapper. <br>
 
 The EventSource API is easy as it is. Reason I created this was to hide all logic used when I implement EventSource. <br>
 
@@ -67,13 +67,13 @@ If you need to close the connection client side
 // Close
 es.close();
 
-// Need to start the connection again?
+// Need to open the connection again?
 es.listen();
 ```
 
 Built in features
 ------
-* If you send an event with event id 'CLOSE', it'll close your sse connection with no retries.
+* If you send an event with event id 'CLOSE', it'll close your SSE connection with no retries.
 
 Example
 ------
