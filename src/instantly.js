@@ -1,43 +1,41 @@
-'use strict';
+const isString = str => typeof str === 'string';
+const isFunction = func => typeof func === 'function';
 
-var isString = require('lodash.isstring');
-var isFunction = require('lodash.isfunction');
+class Instantly {
+    constructor(channel, opts) {
+        if (!channel) {
+            throw new TypeError('You need to provide a channel we can listen to!');
+        }
 
-function Instantly(channel, opts) {
-    if (!channel) {
-        throw new TypeError('You need to provide a channel we can listen to!');
+        this.channel = channel;
+
+        if (!opts) {
+            opts = {};
+        }
+
+        if (opts.injectEventSourceNode) {
+            this.EventSource = opts.injectEventSourceNode;
+        } else if (typeof window !== 'undefined' && window.EventSource) {
+            this.EventSource = window.EventSource;
+        }
+
+        this.initialized = false;
+        this.callbacks = {};
+        this.internalRetry = 0;
+
+        this.origin = opts.origin || null;
+        this.retries = opts.retries || 5;
+        this.timeout = opts.timeout || 15000;
+        this.errorHandler = isFunction(opts.error) ? opts.error : null;
+        this.onOpen = isFunction(opts.open) ? opts.open : null;
+        this.onClose = isFunction(opts.close) ? opts.close : null;
+
+        if (opts.closeConnNotFocus && typeof document !== 'undefined') {
+            document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
+        }
     }
 
-    this.channel = channel;
-
-    if (!opts) {
-        opts = {};
-    }
-
-    if (opts.injectEventSourceNode) {
-        this.EventSource = opts.injectEventSourceNode;
-    } else if (typeof window !== 'undefined' && window.EventSource) {
-        this.EventSource = window.EventSource;
-    }
-
-    this.origin = opts.origin || null;
-    this.retries = opts.retries || 5;
-    this.timeout = opts.timeout || 15000;
-    this.errorHandler = isFunction(opts.error) ? opts.error : null;
-    this.onOpen = isFunction(opts.open) ? opts.open : null;
-    this.onClose = isFunction(opts.close) ? opts.close : null;
-
-    if (opts.closeConnNotFocus && typeof document !== 'undefined') {
-        document.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
-    }
-}
-
-Instantly.prototype = {
-    initialized: false,
-    callbacks: {},
-    internalRetry: 0,
-
-    on: function(event, callback) {
+    on(event, callback) {
         if (!isFunction(callback)) {
             throw new TypeError('Callback is not a function');
         }
@@ -47,9 +45,9 @@ Instantly.prototype = {
         }
 
         this.callbacks[event] = callback;
-    },
+    }
 
-    listen: function() {
+    listen() {
         if (!this.EventSource) {
             return;
         }
@@ -59,16 +57,16 @@ Instantly.prototype = {
         this.es.addEventListener('open', this.open.bind(this));
         this.es.addEventListener('error', this.error.bind(this));
 
-        for (var event in this.callbacks) {
+        for (let event in this.callbacks) {
             if (!this.callbacks.hasOwnProperty(event)) {
                 return;
             }
 
             this.generateCallback(event);
         }
-    },
+    }
 
-    generateCallback: function(event) {
+    generateCallback(event) {
         this.es.addEventListener(event, function(e) {
             if (this.origin && e.origin !== this.origin) {
                 return;
@@ -80,9 +78,9 @@ Instantly.prototype = {
 
             this.callbacks[event].call(null, e);
         }.bind(this));
-    },
+    }
 
-    retry: function() {
+    retry() {
         if (this.initialized || this.internalRetry === this.retries) {
             return;
         }
@@ -92,9 +90,9 @@ Instantly.prototype = {
 
             this.internalRetry++;
         }.bind(this), this.timeout);
-    },
+    }
 
-    open: function(e) {
+    open(e) {
         this.initialized = true;
 
         this.internalRetry = 0;
@@ -102,9 +100,9 @@ Instantly.prototype = {
         if (this.onOpen) {
             this.onOpen.call(null, e);
         }
-    },
+    }
 
-    close: function() {
+    close() {
         this.es.close();
 
         this.initialized = false;
@@ -112,9 +110,9 @@ Instantly.prototype = {
         if (this.onClose) {
             this.onClose.call(null);
         }
-    },
+    }
 
-    error: function(err) {
+    error(err) {
         this.close();
 
         this.retry();
@@ -122,9 +120,9 @@ Instantly.prototype = {
         if (this.errorHandler) {
             this.errorHandler.call(null, err);
         }
-    },
+    }
 
-    onVisibilityChange: function() {
+    onVisibilityChange() {
         if (document.hidden) {
             this.close();
         } else {

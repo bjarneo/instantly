@@ -13,18 +13,16 @@
   ],
   "main": "instantly.min.js",
   "scripts": {
-    "build": "NODE_ENV=production webpack -p",
-    "build:dev": "webpack",
-    "watch": "webpack --watch",
-    "lint": "eslint src/ test/",
-    "posttest": "npm run lint",
+    "build": "nanon",
     "prepublish": "npm test",
-    "test": "istanbul cover _mocha"
+    "test": "istanbul cover _mocha",
+    "test:watch": "mocha --watch"
   },
   "nanon": {
     "input": "src/instantly.js",
     "output": "instantly.min.js",
-    "name": "Instantly"
+    "name": "Instantly",
+    "polyfill": true
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
@@ -37,8 +35,6 @@
     "url": "https://github.com/bjarneo/instantly/issues"
   },
   "devDependencies": {
-    "eslint": "^1.10.3",
-    "eslint-config-vgno": "^5.0.0",
     "eventsource": "^0.1.6",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
