@@ -17,10 +17,14 @@
     "build:dev": "webpack",
     "watch": "webpack --watch",
     "lint": "eslint src/ test/",
-    "snyk": "snyk test",
     "posttest": "npm run lint",
     "prepublish": "npm test",
-    "test": "snyk test && istanbul cover _mocha"
+    "test": "istanbul cover _mocha"
+  },
+  "nanon": {
+    "input": "src/instantly.js",
+    "output": "instantly.min.js",
+    "name": "Instantly"
   },
   "author": "Bjarne Oeverli <bjarne.oeverli@gmail.com>",
   "license": "MIT",
@@ -38,9 +42,8 @@
     "eventsource": "^0.1.6",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
-    "snyk": "^1.8.4",
-    "sse-channel": "^2.0.0",
-    "webpack": "^1.12.9"
+    "nanon": "^1.1.0",
+    "sse-channel": "^2.0.0"
   },
   "dependencies": {
     "lodash.isfunction": "^3.0.6",
