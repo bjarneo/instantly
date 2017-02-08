@@ -6,6 +6,10 @@ var EventSource = require('eventsource');
 var SseChannel = require('sse-channel');
 var Instantly = require('../src/instantly');
 
+if (process.env.NODE_ENV === 'travis') {
+    Instantly = require('../instantly.min');
+}
+
 var endpoint = 'http://127.0.0.1:7788/channel/test';
 var port = 7788;
 var ip = '127.0.0.1';
