@@ -15,7 +15,7 @@
   "scripts": {
     "build": "nanon",
     "prepublish": "npm test",
-    "test": "istanbul cover _mocha",
+    "test": "NODE_ENV=travis istanbul cover _mocha",
     "test:watch": "mocha --watch"
   },
   "nanon": {
