@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  - '5'
-  - '4.2'
-  - '0.12'
+  - '6'
+  - '8'
+  - '9'
 after_script:
   - npm install codeclimate-test-reporter && cat coverage/lcov.info | codeclimate-test-reporter
 addons:
