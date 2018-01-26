@@ -3,7 +3,7 @@
 var fs = require('fs');
 var express = require('express');
 var eventsource = require('express-eventsource');
-var instantly = fs.readFileSync('../instantly.min.js'); // Yes. Sync.
+var instantly = fs.readFileSync('../dist/instantly.umd.js'); // Yes. Sync.
 var app = express();
 var router = express.Router();
 var sse = eventsource({
