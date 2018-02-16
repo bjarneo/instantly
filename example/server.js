@@ -7,7 +7,7 @@ var instantly = fs.readFileSync('../dist/instantly.umd.js'); // Yes. Sync.
 var app = express();
 var router = express.Router();
 var sse = eventsource({
-    connections: 2
+    connections: 2,
 });
 var broadcast = sse.sender('custom-event-name');
 
@@ -31,7 +31,7 @@ app.use('/sse', router);
 
 app.get('/', function(req, res) {
     res.render('index', {
-        instantly: instantly
+        instantly: instantly,
     });
 });
 

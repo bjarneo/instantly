@@ -1,29 +1,36 @@
 <html>
-    <head>
-        <title>EventSource Example</title>
-    </head>
-    <body>
-        <h1>Instantly</h1>
 
-        <ul id="updated"></ul>
+<head>
+    <title>EventSource Example</title>
+</head>
 
-        <script><%- instantly %></script>
-        <script>
-            var ul = document.getElementById('updated');
-            var li;
+<body>
+    <h1>Instantly</h1>
 
-            var es = new Instantly('http://localhost:1337/sse');
+    <ul id="updated"></ul>
 
-            es.on('custom-event-name', function newMessage(msg) {
-                data = JSON.parse(msg.data);
+    <script>
+        <%- instantly %>
 
-                li = document.createElement('li');
-                li.innerHTML = data.time;
+    </script>
+    <script>
+        var ul = document.getElementById('updated');
+        var li;
 
-                ul.insertBefore(li, ul.firstChild);
-            });
+        var es = new Instantly('http://localhost:1337/sse');
 
-            es.listen();
-        </script>
-    </body>
+        es.on('custom-event-name', function newMessage(msg) {
+            data = JSON.parse(msg.data);
+
+            li = document.createElement('li');
+            li.innerHTML = data.time;
+
+            ul.insertBefore(li, ul.firstChild);
+        });
+
+        es.listen();
+
+    </script>
+</body>
+
 </html>

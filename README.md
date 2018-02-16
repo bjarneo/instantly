@@ -37,8 +37,8 @@ The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https
 
 ```js
 // Example
-var es = new Instantly("http://your-sse-endpoint.codes/channel", {
-    origin: "http://your-sse-endpoint.codes", // Optional. Just an extra level of precaution to verify your event origin matches your app's origin.
+var es = new Instantly('http://your-sse-endpoint.codes/channel', {
+    origin: 'http://your-sse-endpoint.codes', // Optional. Just an extra level of precaution to verify your event origin matches your app's origin.
     retries: 2, // Optional. Default: 5 retries if connection to your endpoint fails.
     timeout: 1000, // Optional. Default: 15 seconds (15000). This is how often we should retry.
     closeConnNotFocus: true, // Optional. Default: false. This will close the SSE connection if the tab/window is not in focus. Will reconnect when in focus.
@@ -49,21 +49,21 @@ var es = new Instantly("http://your-sse-endpoint.codes/channel", {
         console.log(event);
     }, // Optional. Extend when you open a connection to SSE.
     close: function() {
-        console.log("closed");
+        console.log('closed');
     }, // Optional. Extend when a connection to SSE is closed. (Usually when an error occur)
-    injectEventSourceNode: require("eventsource") // Optional. If the module is being used in Node you're able to inject [eventsource-node](https://www.npmjs.com/package/eventsource)
+    injectEventSourceNode: require('eventsource'), // Optional. If the module is being used in Node you're able to inject [eventsource-node](https://www.npmjs.com/package/eventsource)
 });
 
 // If you want to use default options
 // var es = new Instantly('http://your-sse-endpoint.codes/channel');
 
 // Listen to messages without any event set
-es.on("message", function newMessage(msg) {
+es.on('message', function newMessage(msg) {
     console.log(msg.data);
 });
 
 // Listen to messages with an event set
-es.on("eventName", function newMessage(msg) {
+es.on('eventName', function newMessage(msg) {
     console.log(msg.data);
 });
 

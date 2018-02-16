@@ -67,17 +67,20 @@ class Instantly {
     }
 
     generateCallback(event) {
-        this.es.addEventListener(event, function(e) {
-            if (this.origin && e.origin !== this.origin) {
-                return;
-            }
+        this.es.addEventListener(
+            event,
+            function(e) {
+                if (this.origin && e.origin !== this.origin) {
+                    return;
+                }
 
-            if (e.id === 'CLOSE' || e.lastEventId === 'CLOSE') {
-                this.close();
-            }
+                if (e.id === 'CLOSE' || e.lastEventId === 'CLOSE') {
+                    this.close();
+                }
 
-            this.callbacks[event].call(null, e);
-        }.bind(this));
+                this.callbacks[event].call(null, e);
+            }.bind(this)
+        );
     }
 
     retry() {
@@ -85,11 +88,14 @@ class Instantly {
             return;
         }
 
-        setTimeout(function reconnect() {
-            this.listen();
+        setTimeout(
+            function reconnect() {
+                this.listen();
 
-            this.internalRetry++;
-        }.bind(this), this.timeout);
+                this.internalRetry++;
+            }.bind(this),
+            this.timeout
+        );
     }
 
     open(e) {
@@ -129,6 +135,6 @@ class Instantly {
             this.listen();
         }
     }
-};
+}
 
 module.exports = Instantly;
